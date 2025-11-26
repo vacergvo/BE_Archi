@@ -22,11 +22,15 @@
 
 
 
-
-
 ## FLOW PRINCIPLE:
-**Sensor Service** detects car >> sends update to **Parking Spot Service**.
-**Parking Spot Service** marks spot as occupied.
-**Reservation Service** checks if spot was reserved.
-**Payment Service** calculates fee when car exits.
-**Entry/Exit Service** decides whether to open gate.
+    **Sensor Service** detects car >> sends update to **Parking Spot Service**.
+    **Parking Spot Service** marks spot as occupied.
+    **Reservation Service** checks if spot was reserved.
+    **Payment Service** calculates fee when car exits.
+    **Entry/Exit Service** decides whether to open gate.
+
+<img width="673" height="562" alt="image" src="https://github.com/user-attachments/assets/27bf47ce-686d-4f80-aa0a-df21840c3cf9" />
+
+## FLOW EXAMPLE:
+A car arrives:
+by default the gate is closed. it will
