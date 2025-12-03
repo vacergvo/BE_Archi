@@ -19,23 +19,23 @@ Case - 2 Arrival without reservation:
 
 
 #  Reservation
--    **1** Reservation Service --> Parking Spot Service: reserve(requestedSpotId or allocateAny, ttl)
--    Parking Spot Service --> Reservation Service: reserved(reservationId, spotId)
+-    **1** Reservation Service --> Parking Spot Service: reserve(requestedSpotId)
+-    Parking Spot Service --> Reservation Service: reserved(reservationId, assignedSpotId)
 
--    **2** Entry and Exit Service --> Reservation Service: validate(reservationId, now)
--    Reservation Service --> Entry and Exit Service: valid(reservationId, spotId)
+-    **2** Entry and Exit Service --> Reservation Service: validate(reservationId, TimerOn)
+-    Reservation Service --> Entry and Exit Service: valid(reservationId, availableSpotId)   always validate
 
 #  W/O Reservation
--    **1bis** Entry and Exit Service --> Parking Spot Service: findFree()
--    Parking Spot Service --> Entry and Exit Service: freeSpot(spotId) or none
+-    **1bis** Entry and Exit Service --> Parking Spot Service: findFree()   idea of function
+-    Parking Spot Service --> Entry and Exit Service: freeSpot(availableSpotId) or none
 
-#  Always
+#  Always (if a parking spot is available)
 -    **3** Entry and Exit Service --> Parking Spot Service: occupy(spotId)
 -    Parking Spot Service --> Entry and Exit Service: occupied(spotId)
 
--    **4** Entry and Exit Service --> Payment Service: quote(spotId or sessionId)
+-    **4** Entry and Exit Service --> Payment Service: quote(spotId)
 -    Payment Service --> Entry and Exit Service: amountDue
--    **4** Entry and Exit Service --> Payment Service: pay(spotId or sessionId, amount)
+-    **4** Entry and Exit Service --> Payment Service: pay(spotId, amount)
 -    Payment Service --> Entry and Exit Service: accepted
 
 -    **5** Entry and Exit Service --> Parking Spot Service: free(spotId)
