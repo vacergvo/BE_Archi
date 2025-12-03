@@ -34,3 +34,28 @@ Case - 2 Arrival without reservation:
 <img width="754" height="603" alt="image" src="https://github.com/user-attachments/assets/983e1b85-16dc-4fcb-987f-f627d4626cdd" />
 
 
+
+#  Reservation
+-    Reservation Service --> Parking Spot Service: reserve(requestedSpotId or allocateAny, ttl)
+-    Parking Spot Service --> Reservation Service: reserved(reservationId, spotId)
+
+-    Entry and Exit Service --> Reservation Service: validate(reservationId, now)
+-    Reservation Service --> Entry and Exit Service: valid(reservationId, spotId)
+
+#  W/O Reservation
+-    Entry and Exit Service --> Parking Spot Service: findFree()
+-    Parking Spot Service --> Entry and Exit Service: freeSpot(spotId) or none
+
+#  Always
+-    Entry and Exit Service --> Parking Spot Service: occupy(spotId)
+-    Parking Spot Service --> Entry and Exit Service: occupied(spotId)
+
+-    Entry and Exit Service --> Payment Service: quote(spotId or sessionId)
+-    Payment Service --> Entry and Exit Service: amountDue
+-    Entry and Exit Service --> Payment Service: pay(spotId or sessionId, amount)
+-    Payment Service --> Entry and Exit Service: accepted
+
+-    Entry and Exit Service --> Parking Spot Service: free(spotId)
+-    Parking Spot Service --> Entry and Exit Service: freed(spotId)
+
+
