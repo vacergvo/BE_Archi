@@ -31,5 +31,6 @@ Case - 2 Arrival without reservation:
 -    **Payment service** <--> **Entry/Exit service**: lorsque lon veut sortir, on donne en entree de la machine l'id de la place et on renvoie le montant à payer
 -    **Payment service** <--> **Entry/Exit service**: on paye (on part du principe que ca marche toujours)
 -    **Entry/Exit service** <--> **Parking spot service** on set la place de la personne qui vient de partir en 'free'
-<img width="673" height="562" alt="image" src="https://github.com/user-attachments/assets/27bf47ce-686d-4f80-aa0a-df21840c3cf9" />
+<img width="754" height="603" alt="image" src="https://github.com/user-attachments/assets/983e1b85-16dc-4fcb-987f-f627d4626cdd" />
+
 
