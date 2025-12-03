@@ -1,0 +1,41 @@
+package com.insa.parking.sensor_service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+import java.util.Random;
+
+@Component
+public class SensorSimulator {
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    private final Random random = new Random();
+
+    // Cette méthode se lance toutes les 10 secondes (10000 ms)
+    @Scheduled(fixedRate = 10000)
+    public void simulateSensorActivity() {
+        
+        // 1. Choisir une place au hasard (entre 1 et 5 car on a inséré 5 places)
+        int spotId = random.nextInt(5) + 1;
+
+        // 2. Choisir un statut au hasard
+        String[] statusPossibles = {"Libre", "Occupé"};
+        String nouveauStatus = statusPossibles[random.nextInt(statusPossibles.length)];
+
+        System.out.println("⚡ CAPTEUR : Détection de changement sur la place " + spotId + " -> " + nouveauStatus);
+
+        // 3. Envoyer l'info au Parking Spot Service (Port 8082)
+        String url = "http://localhost:8082/api/spots/" + spotId + "/status";
+        
+        try {
+            // Envoie une requête PUT
+            restTemplate.put(url, nouveauStatus);
+            System.out.println("✅ Info envoyée au Parking Spot Service !");
+        } catch (Exception e) {
+            System.err.println("❌ Erreur : Impossible de joindre le Parking Spot Service. Est-il lancé ?");
+        }
+    }
+}
