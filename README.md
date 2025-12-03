@@ -17,11 +17,12 @@ This is the gatekeeper. Its goal is to control the barrier and reconcile the rea
 
 
 ## FLOW PRINCIPLE:
-    **Sensor Service** detects car >> sends update to **Parking Spot Service**.
-    **Parking Spot Service** marks spot as occupied.
-    **Reservation Service** checks if spot was reserved.
-    **Payment Service** calculates fee when car exits.
-    **Entry/Exit Service** decides whether to open gate.
-
+Case - 1 Arrival with reservation:
+**Reservation service** <--> **Parking spot service**: reserve puis reponse avec le num de place (etat reserved)  et un id de reservation
+**Entry/Exit service** <--> **Reservation Service**: on presente lid de reservation et on check dans la base si cest valide (on part du principe que cest valide)
+**Entry/Exit service** <--> **Parking spot service**: on set la place de l'etat reserved a occupied et on ouvre la gate
+**Payment service** <--> **Entry/Exit service**: lorsque lon veut sortir, on donne en entree de la machine l'id de la place et on renvoie le montant à payer
+**Payment service** <--> **Entry/Exit service**: on paye (on part du principe que ca marche toujours)
+**Entry/Exit service** <--> **Parking spot service** on set la place de la personne qui vient de partir en 'free'
 <img width="673" height="562" alt="image" src="https://github.com/user-attachments/assets/27bf47ce-686d-4f80-aa0a-df21840c3cf9" />
 
