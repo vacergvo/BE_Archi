@@ -1,5 +1,6 @@
 # BE_Archi
 Overleaf project: https://www.overleaf.com/4983453471tnhnqtyzdbdq#8d1400
+<img width="1900" height="1079" alt="image" src="https://github.com/user-attachments/assets/b881ba1f-4ba7-4ed7-a1e1-416e90165af7" />
 
 ## FLOW PRINCIPLE:
 Case - 1 Arrival with reservation:
