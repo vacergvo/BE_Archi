@@ -18,10 +18,10 @@ public class SensorSimulator {
     @Scheduled(fixedRate = 10000)
     public void simulateSensorActivity() {
         
-        // 1. Choisir une place au hasard (entre 1 et 8 car on a inséré 8 places)
+        //Random spot number
         int spotId = random.nextInt(8) + 1;
 
-        // 2. Choisir un statut au hasard
+        //Random status
         String[] statusPossibles = {"Libre", "Occupé"};
         String nouveauStatus = statusPossibles[random.nextInt(statusPossibles.length)];
 

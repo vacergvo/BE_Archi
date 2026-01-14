@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Parking Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        .card-spot { transition: transform 0.2s; }
+        .card-spot:hover { transform: scale(1.05); }
+        .bg-libre { background-color: #28a745; color: white; }
+        .bg-occupe { background-color: #dc3545; color: white; }
+        .bg-reserve { background-color: #ffc107; color: black; }
+    </style>
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+    <h1 class="text-center mb-5"><i class="fas fa-parking"></i> Gestion du Parking INSA</h1>
+
+    <div class="row mb-5">
+        <h3 class="mb-3">État du Parking en Temps Réel</h3>
+        
+        <div class="col-md-3 mb-4" th:each="spot : ${spots}">
+            <div class="card card-spot text-center shadow-sm"
+                 th:classappend="${spot.status == 'Libre' ? 'bg-libre' : (spot.status == 'Occupé' ? 'bg-occupe' : 'bg-reserve')}">
+                <div class="card-body">
+                    <h2 class="card-title" th:text="${spot.nom}">A1</h2>
+                    <p class="card-text">
+                        <i class="fas fa-car" th:if="${spot.status == 'Occupé'}"></i>
+                        <i class="fas fa-check-circle" th:if="${spot.status == 'Libre'}"></i>
+                        <i class="fas fa-clock" th:if="${spot.status == 'Réservé'}"></i>
+                        <span th:text="${spot.status}">Libre</span>
+                    </p>
+                    <small th:text="${spot.type}">Standard</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow">
+	</div></div></div>
+	
+
+<script>
+    // Fonction pour appeler l'API Entrée (Port 8084)
+    async function entrerVoiture() {
+        const data = {
+            plaqueImmat: document.getElementById('plaqueEntree').value,
+            idSpot: document.getElementById('idSpotEntree').value
+        };
+
+        try {
+            await fetch('http://localhost:8084/api/sessions/enter', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            });
+            alert("Voiture entrée !");
+            location.reload(); // Recharger la page pour voir le changement de couleur
+        } catch (e) {
+            alert("Erreur lors de l'entrée");
+        }
+    }
+
+    // Fonction pour appeler l'API Sortie (Port 8084)
+    async function sortirVoiture() {
+        const data = {
+            plaqueImmat: document.getElementById('plaqueSortie').value
+        };
+
+        try {
+            const response = await fetch('http://localhost:8084/api/sessions/exit', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            alert("Voiture sortie ! Prix à payer : " + result.prixTotal + " €");
+            location.reload();
+        } catch (e) {
+            alert("Erreur lors de la sortie");
+        }
+    }
+    
+    // Auto-refresh toutes les 5 secondes pour voir les changements du SensorService
+    setTimeout(function(){
+       location.reload();
+    }, 5000);
+</script>
+
+</body>
+</html>
