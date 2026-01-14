@@ -14,7 +14,6 @@ public class SensorSimulator {
 
     private final Random random = new Random();
 
-    // Cette méthode se lance toutes les 10 secondes (10000 ms)
     @Scheduled(fixedRate = 10000)
     public void simulateSensorActivity() {
         
@@ -27,11 +26,10 @@ public class SensorSimulator {
 
         System.out.println("⚡ CAPTEUR : Détection de changement sur la place " + spotId + " -> " + nouveauStatus);
 
-        // 3. Envoyer l'info au Parking Spot Service (Port 8082)
+        //Port 8082
         String url = "http://localhost:8082/api/spots/" + spotId + "/status";
         
         try {
-            // Envoie une requête PUT
             restTemplate.put(url, nouveauStatus);
             System.out.println("✅ Info envoyée au Parking Spot Service !");
         } catch (Exception e) {

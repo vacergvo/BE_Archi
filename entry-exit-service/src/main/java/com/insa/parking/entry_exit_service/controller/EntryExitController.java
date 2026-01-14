@@ -29,14 +29,14 @@ public class EntryExitController {
         return repository.findAll();
     }
 
-    // --- ENTRÉE ---
+    //ENTRY
     @PostMapping("/enter")
     public ResponseEntity<?> enterParking(@RequestBody SessionParking session) {
         session.setHeureEntree(LocalDateTime.now());
         SessionParking savedSession = repository.save(session);
         System.out.println("🚗 ENTRÉE : " + session.getPlaqueImmat());
 
-        // Dire au Parking Spot Service : "Occupé"
+        //Occupied
         try {
             String url = "http://localhost:8082/api/spots/" + session.getIdSpot() + "/status";
             restTemplate.put(url, "Occupé");
@@ -46,7 +46,7 @@ public class EntryExitController {
         return ResponseEntity.ok(savedSession);
     }
 
-    // --- SORTIE ---
+    //EXIT
     @PostMapping("/exit")
     public ResponseEntity<?> exitParking(@RequestBody Map<String, String> request) {
         String plaque = request.get("plaqueImmat");
@@ -60,14 +60,14 @@ public class EntryExitController {
         SessionParking session = sessionOpt.get();
         session.setHeureSortie(LocalDateTime.now());
 
-        // Calcul du prix (0.10€ la seconde pour le test)
+        //0.1€/s price calculation
         long durationSeconds = Duration.between(session.getHeureEntree(), session.getHeureSortie()).getSeconds();
         session.setPrixTotal(BigDecimal.valueOf(durationSeconds * 0.10));
 
         repository.save(session);
         System.out.println("👋 SORTIE : " + plaque + " | Prix : " + session.getPrixTotal() + "€");
 
-        // Dire au Parking Spot Service : "Libre"
+        //FREE
         try {
             String url = "http://localhost:8082/api/spots/" + session.getIdSpot() + "/status";
             restTemplate.put(url, "Libre");

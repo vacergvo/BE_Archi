@@ -12,7 +12,6 @@ public class Reservation {
     @Column(name = "id_reservation")
     private Integer id;
 
-    // On stocke juste l'ID de la place (Microservices = pas de liaison directe d'objet entre services)
     @Column(name = "id_spot", nullable = false)
     private Integer idSpot;
 
@@ -33,7 +32,6 @@ public class Reservation {
         Confirmée, Annulée, Terminée
     }
 
-    // --- GETTERS & SETTERS (Générez-les via Clic-droit > Source > Generate...) ---
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
     public Integer getIdSpot() { return idSpot; }

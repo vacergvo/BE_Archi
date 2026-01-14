@@ -28,10 +28,6 @@ public class SessionParking {
     @Column(name = "prix_total")
     private BigDecimal prixTotal;
 
-    // ==========================================================
-    //    VOICI LES MÉTHODES QUI MANQUAIENT (GETTERS & SETTERS)
-    // ==========================================================
-
     public Long getId() {
         return id;
     }
@@ -60,7 +56,6 @@ public class SessionParking {
         return heureEntree;
     }
 
-    // C'EST CELLE-CI QUI BLOQUAIT VOTRE CODE :
     public void setHeureEntree(LocalDateTime heureEntree) {
         this.heureEntree = heureEntree;
     }

@@ -22,12 +22,10 @@ public class ParkingSpotController {
     }
     
     // URL: PUT http://localhost:8082/api/spots/{id}/status
-    // Sert au Sensor Service pour mettre à jour une place
     @PutMapping("/{id}/status")
     public ResponseEntity<ParkingSpot> updateStatus(@PathVariable Integer id, @RequestBody String newStatus) {
         return repository.findById(id)
             .map(spot -> {
-                // On nettoie le string (enlève les guillemets éventuels)
                 String statusClean = newStatus.replace("\"", "").trim();
                 spot.setStatus(ParkingSpot.SpotStatus.valueOf(statusClean));
                 return ResponseEntity.ok(repository.save(spot));

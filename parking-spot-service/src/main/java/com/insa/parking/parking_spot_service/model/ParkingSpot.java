@@ -10,16 +10,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "EMPLACEMENT") // Le nom exact de ta table SQL
+@Table(name = "EMPLACEMENT")
 public class ParkingSpot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_spot") // Le nom exact de la colonne ID
+    @Column(name = "id_spot")
     private Integer id;
 
     @Column(name = "nom", nullable = false, unique = true)
-    private String nom; // A1, A2...
+    private String nom;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
@@ -29,7 +29,6 @@ public class ParkingSpot {
     @Column(name = "status", nullable = false)
     private SpotStatus status;
 
-    // --- ENUMS (Définis ici pour correspondre à ton SQL) ---
     public enum SpotType {
         Standard, PMR, Electrique
     }
@@ -38,9 +37,6 @@ public class ParkingSpot {
         Libre, Réservé, Occupé
     }
 
-    // --- GETTERS & SETTERS OBLIGATOIRES ---
-    // Astuce Eclipse : Clic-droit dans le code > Source > Generate Getters and Setters > Select All > Generate
-    
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
     public String getNom() { return nom; }

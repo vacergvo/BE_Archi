@@ -15,16 +15,13 @@ public class PaymentController {
     @Autowired
     private PaymentRepository repository;
 
-    // Voir tous les paiements
     @GetMapping
     public List<PaymentTransaction> getAllPayments() {
         return repository.findAll();
     }
 
-    // Enregistrer un nouveau paiement
     @PostMapping
     public ResponseEntity<PaymentTransaction> createPayment(@RequestBody PaymentTransaction transaction) {
-        // On fixe l'heure et le statut automatiquement pour simplifier
         transaction.setHorodatage(LocalDateTime.now());
         transaction.setStatus(PaymentTransaction.PaymentStatus.Payé);
         

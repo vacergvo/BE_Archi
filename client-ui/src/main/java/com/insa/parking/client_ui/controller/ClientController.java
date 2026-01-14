@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.Map;
 
-@Controller // Notez @Controller et pas @RestController car on renvoie du HTML
+@Controller
 public class ClientController {
 
     @Bean
@@ -19,18 +19,18 @@ public class ClientController {
 
     @GetMapping("/")
     public String dashboard(Model model, RestTemplate restTemplate) {
-        // 1. Récupérer la liste des places depuis le Parking Spot Service (8082)
+        //Dump spot tab (port 8082)
         String urlSpots = "http://localhost:8082/api/spots";
         List<Map<String, Object>> spots = restTemplate.getForObject(urlSpots, List.class);
 
-        // 2. Récupérer les réservations (8083)
+        //Dump reservation (port 8083)
         String urlResa = "http://localhost:8083/api/reservations";
         List<Map<String, Object>> reservations = restTemplate.getForObject(urlResa, List.class);
         
-        // 3. Envoyer les données à la page HTML
+        //Send html
         model.addAttribute("spots", spots);
         model.addAttribute("reservations", reservations);
 
-        return "dashboard"; // Cherchera le fichier dashboard.html
+        return "dashboard";
     }
 }
